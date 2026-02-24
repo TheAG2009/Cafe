@@ -1,5 +1,6 @@
 // ========== Global Variables ==========
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let loggedInUser = localStorage.getItem('loggedInUser') || null; // store name
 
 // ========== Update Cart Count in Navigation ==========
 function updateCartCount() {
@@ -10,14 +11,17 @@ function updateCartCount() {
     }
 }
 
-// ========== Menu Items Data (Static) ==========
+// ========== Menu Items Data (Indian Veg) ==========
 const menuItems = [
-    { id: 1, name: 'Margherita Pizza', description: 'Classic cheese and tomato', price: 12.99, image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=400' },
-    { id: 2, name: 'Caesar Salad', description: 'Fresh romaine with Caesar dressing', price: 8.99, image: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=400' },
-    { id: 3, name: 'Grilled Salmon', description: 'Served with vegetables', price: 18.99, image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400' },
-    { id: 4, name: 'Chocolate Cake', description: 'Rich and moist', price: 6.99, image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400' },
-    { id: 5, name: 'Iced Coffee', description: 'Freshly brewed with ice', price: 4.99, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400' },
-    { id: 6, name: 'Fruit Smoothie', description: 'Mixed berries and banana', price: 5.99, image: 'https://images.unsplash.com/photo-1502741224143-90386d7f8c82?w=400' }
+    { id: 1, name: 'Masala Chai', description: 'Spiced tea with ginger', price: 20, image: 'https://images.unsplash.com/photo-1579632652768-453cb5f7f6b9?w=400' },
+    { id: 2, name: 'Filter Coffee', description: 'South Indian style coffee', price: 25, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400' },
+    { id: 3, name: 'Samosa', description: 'Crispy pastry with spiced potatoes', price: 15, image: 'https://images.unsplash.com/photo-1601050690597-df0568f7a1f1?w=400' },
+    { id: 4, name: 'Vada Pav', description: 'Mumbai style burger', price: 20, image: 'https://images.unsplash.com/photo-1606491956689-2ea866880c84?w=400' },
+    { id: 5, name: 'Paneer Tikka Sandwich', description: 'Grilled sandwich with paneer', price: 50, image: 'https://images.unsplash.com/photo-1528736235302-52922df5c122?w=400' },
+    { id: 6, name: 'Gulab Jamun (2 pcs)', description: 'Soft milk solids in sugar syrup', price: 30, image: 'https://images.unsplash.com/photo-1589119908995-c6837a148b2b?w=400' },
+    { id: 7, name: 'Veg Biryani', description: 'Aromatic rice with mixed veggies', price: 80, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=400' },
+    { id: 8, name: 'Mango Lassi', description: 'Sweet yogurt mango drink', price: 40, image: 'https://images.unsplash.com/photo-1621266046798-7f150ae6a19e?w=400' },
+    { id: 9, name: 'Onion Pakoda', description: 'Crispy onion fritters', price: 30, image: 'https://images.unsplash.com/photo-1606491956398-7b2b5e5b7f0a?w=400' }
 ];
 
 // ========== Load Menu Items on menu.html ==========
@@ -31,8 +35,8 @@ if (document.querySelector('.menu-page')) {
                 <img src="${item.image}" alt="${item.name}">
                 <h3>${item.name}</h3>
                 <p>${item.description}</p>
-                <p class="price">$${item.price.toFixed(2)}</p>
-                <button class="btn add-to-cart" data-id="${item.id}">Add to Cart</button>
+                <p class="price">₹${item.price}</p>
+                <button class="add-to-cart" data-id="${item.id}">Add to Cart</button>
             `;
             menuContainer.appendChild(itemDiv);
         });
@@ -58,14 +62,17 @@ function addToCart(item) {
     }
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-    alert(`${item.name} added to cart!`);
+    // Show a small animation instead of alert
+    const btn = event.target;
+    btn.textContent = '✓ Added';
+    setTimeout(() => btn.textContent = 'Add to Cart', 1000);
 }
 
 function removeFromCart(id) {
     cart = cart.filter(item => item.id !== id);
     localStorage.setItem('cart', JSON.stringify(cart));
     updateCartCount();
-    displayCartItems(); // if on cart page
+    displayCartItems();
 }
 
 function updateQuantity(id, change) {
@@ -91,7 +98,7 @@ function displayCartItems() {
     cartContainer.innerHTML = '';
     if (cart.length === 0) {
         cartContainer.innerHTML = '<p>Your cart is empty.</p>';
-        totalSpan.textContent = '0.00';
+        totalSpan.textContent = '0';
         return;
     }
 
@@ -104,7 +111,7 @@ function displayCartItems() {
             <img src="${item.image}" alt="${item.name}">
             <div class="cart-item-details">
                 <h4>${item.name}</h4>
-                <p>$${item.price.toFixed(2)} each</p>
+                <p>₹${item.price} each</p>
             </div>
             <div class="cart-item-actions">
                 <button class="decrease" data-id="${item.id}">-</button>
@@ -116,7 +123,7 @@ function displayCartItems() {
         cartContainer.appendChild(itemDiv);
     });
 
-    totalSpan.textContent = total.toFixed(2);
+    totalSpan.textContent = total;
 
     // Attach event listeners
     document.querySelectorAll('.decrease').forEach(btn => {
@@ -130,36 +137,81 @@ function displayCartItems() {
     });
 }
 
-// ========== Checkout Button on cart.html ==========
+// ========== Checkout & Payment ==========
 if (document.getElementById('checkout-btn')) {
-    document.getElementById('checkout-btn').addEventListener('click', () => {
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const paymentSection = document.getElementById('payment-section');
+    const qrSection = document.getElementById('qr-section');
+    const cashMessage = document.getElementById('cash-message');
+    const thankyouMsg = document.getElementById('thankyou-message');
+    const paymentBtns = document.querySelectorAll('.payment-btn');
+
+    checkoutBtn.addEventListener('click', () => {
         if (cart.length === 0) {
             alert('Your cart is empty!');
             return;
         }
-        // Simulate payment processing
-        document.getElementById('checkout-message').textContent = 'Processing payment...';
-        setTimeout(() => {
-            // Clear cart
-            cart = [];
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCartCount();
-            displayCartItems();
-            document.getElementById('checkout-message').textContent = 'Payment successful! Thank you for your order.';
-        }, 1500);
+        // Show payment options, hide checkout button initially?
+        paymentSection.style.display = 'block';
+        checkoutBtn.style.display = 'none';
+    });
+
+    paymentBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const method = e.target.dataset.method;
+            // Hide both sections first
+            qrSection.style.display = 'none';
+            cashMessage.style.display = 'none';
+
+            if (method === 'cash') {
+                cashMessage.style.display = 'block';
+                thankyouMsg.textContent = ''; // clear
+                // Clear cart after a moment
+                setTimeout(() => {
+                    cart = [];
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    displayCartItems();
+                    paymentSection.style.display = 'none';
+                    checkoutBtn.style.display = 'block';
+                    cashMessage.style.display = 'none';
+                    alert('Thank you! Please pay at the counter.');
+                }, 2000);
+            } else {
+                // UPI methods (gpay or phonepe) – show QR
+                qrSection.style.display = 'block';
+                // You can customize QR data based on method if needed
+                const qrImg = qrSection.querySelector('img');
+                // For demo, static QR (you can replace with actual UPI ID)
+                qrImg.src = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=upi://pay?pa=agscafe@okhdfcbank&pn=AG%27s%20CAFE&am=' + (document.getElementById('cart-total').textContent) + '&cu=INR';
+                thankyouMsg.textContent = 'Thank you! After payment, your order will be prepared.';
+                // Clear cart after 5 seconds (simulate payment)
+                setTimeout(() => {
+                    cart = [];
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    displayCartItems();
+                    paymentSection.style.display = 'none';
+                    checkoutBtn.style.display = 'block';
+                    qrSection.style.display = 'none';
+                    alert('Payment successful! Thank you.');
+                }, 5000);
+            }
+        });
     });
 }
 
-// ========== Login Simulation ==========
+// ========== Login Simulation & UI Update ==========
 if (document.getElementById('login-form')) {
     document.getElementById('login-form').addEventListener('submit', (e) => {
         e.preventDefault();
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        // Simulate login – store a flag
+        // Simulate login – store user's name (extract from email)
         if (email && password) {
-            localStorage.setItem('isLoggedIn', 'true');
+            const name = email.split('@')[0]; // crude name
+            localStorage.setItem('loggedInUser', name);
             document.getElementById('login-message').textContent = 'Login successful! Redirecting...';
             setTimeout(() => {
                 window.location.href = 'index.html';
@@ -170,11 +222,35 @@ if (document.getElementById('login-form')) {
     });
 }
 
-// ========== Check if user is logged in (optional) ==========
-// (We don't enforce login, just simulation)
+// ========== Update UI Based on Login State ==========
+function updateUIForLogin() {
+    const user = localStorage.getItem('loggedInUser');
+    const loginLink = document.getElementById('login-link');
+    const userGreeting = document.getElementById('user-greeting');
+    const heroLogin = document.getElementById('hero-login');
+    const heroOrder = document.getElementById('hero-order');
+
+    if (user) {
+        // Hide login link, show greeting
+        if (loginLink) loginLink.style.display = 'none';
+        if (userGreeting) {
+            userGreeting.style.display = 'block';
+            userGreeting.textContent = `Welcome, ${user}!`;
+        }
+        // On home page, show "Order Now" instead of "Login to Order"
+        if (heroLogin) heroLogin.style.display = 'none';
+        if (heroOrder) heroOrder.style.display = 'inline-block';
+    } else {
+        if (loginLink) loginLink.style.display = 'inline';
+        if (userGreeting) userGreeting.style.display = 'none';
+        if (heroLogin) heroLogin.style.display = 'inline-block';
+        if (heroOrder) heroOrder.style.display = 'none';
+    }
+}
 
 // ========== Initialise ==========
 updateCartCount();
+updateUIForLogin();
 if (document.querySelector('.cart-page')) {
     displayCartItems();
 }
