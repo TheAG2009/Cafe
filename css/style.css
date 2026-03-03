@@ -1,4 +1,340 @@
-/* Add this at the END of your style.css file */
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #fef9e7;
+}
+
+/* Navigation */
+nav {
+    background: #4e2e1e;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+nav a:hover {
+    color: #ffd966;
+}
+
+.user-greeting {
+    color: #ffd966;
+    font-weight: bold;
+}
+
+/* Main content */
+main {
+    flex: 1;
+    padding: 2rem;
+}
+
+/* Hero Section */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1200') center/cover;
+    color: white;
+    text-align: center;
+    padding: 5rem 2rem;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background: #c49a6c;
+    color: white;
+    padding: 0.8rem 1.8rem;
+    text-decoration: none;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 1rem;
+    margin: 0.3rem;
+}
+
+.btn:hover {
+    background: #a5714b;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid white;
+}
+
+.btn-outline:hover {
+    background: white;
+    color: #4e2e1e;
+}
+
+.btn-primary {
+    background: #d4a373;
+}
+
+/* Features Section */
+.features {
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.features h2 {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #4e2e1e;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature {
+    background: #fff3e0;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.feature img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.feature h3 {
+    margin: 1rem 0 0.5rem;
+    color: #5e3a22;
+}
+
+.feature p {
+    padding: 0 1rem 1rem;
+}
+
+/* Login Form */
+.login-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff3e0;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.login-container h2 {
+    margin-bottom: 1rem;
+    color: #4e2e1e;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: #5e3a22;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #c49a6c;
+    border-radius: 25px;
+    outline: none;
+}
+
+#login-message {
+    margin-top: 1rem;
+    color: green;
+}
+
+/* Menu Page */
+.menu-page {
+    padding: 2rem;
+    min-height: 500px;
+}
+
+.menu-page h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #4e2e1e;
+    font-size: 2rem;
+}
+
+.menu-items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.menu-item {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.menu-item img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.menu-item h3 {
+    margin: 0.5rem 0;
+    color: #4e2e1e;
+}
+
+.menu-item .price {
+    font-weight: bold;
+    color: #c49a6c;
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+}
+
+.menu-item button {
+    background: #4e2e1e;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.menu-item button:hover {
+    background: #6b4226;
+}
+
+/* Cart Page */
+.cart-page {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid #ddd;
+    padding: 1rem 0;
+}
+
+.cart-item img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.cart-item-details {
+    flex: 1;
+}
+
+.cart-item-details h4 {
+    margin-bottom: 0.3rem;
+    color: #4e2e1e;
+}
+
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cart-item-actions button {
+    background: #c49a6c;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.cart-item-actions button.remove {
+    background: #b22222;
+    border-radius: 5px;
+}
+
+.cart-total {
+    text-align: right;
+    margin: 1rem 0;
+    font-size: 1.3rem;
+    color: #4e2e1e;
+}
+
+#checkout-btn {
+    width: 100%;
+    padding: 1rem;
+    background: #4e2e1e;
+    border-radius: 50px;
+    font-size: 1.2rem;
+}
+
+/* Payment Section */
+.payment-options {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+#qr-section, #cash-message {
+    text-align: center;
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #fff3e0;
+    border-radius: 15px;
+}
 
 /* Login Popup */
 .login-popup {
@@ -103,4 +439,13 @@
 
 .popup-cancel:hover {
     background: #999;
+}
+
+/* Footer */
+footer {
+    background: #4e2e1e;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
 }
