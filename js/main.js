@@ -78,11 +78,11 @@ const menuItems = [
     { id: 44, name: 'Mango Shake', description: 'Fresh mango milkshake', price: 80, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400' },
     { id: 45, name: 'Strawberry Shake', description: 'Strawberry milkshake', price: 80, image: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=400' },
     
-    // ----- Coffee & Tea (EXACT MATCHING IMAGES) -----
+    // ----- Coffee & Tea -----
     { id: 46, name: 'Filter Coffee', description: 'South Indian style coffee', price: 25, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400' },
     { id: 47, name: 'Masala Chai', description: 'Spiced tea with ginger', price: 20, image: 'https://images.unsplash.com/photo-1579632652768-453cb5f7f6b9?w=400' },
     { id: 48, name: 'Cold Coffee', description: 'Chilled coffee with ice cream', price: 60, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400' },
-    { id: 49, name: 'Green Tea', description: 'Healthy green tea', price: 25, image: 'https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5?w=400' }, // EXACT GREEN TEA IMAGE
+    { id: 49, name: 'Green Tea', description: 'Healthy green tea', price: 25, image: 'https://images.unsplash.com/photo-1627435601361-ec25f5b1d0e5?w=400' },
     { id: 50, name: 'Badam Milk', description: 'Rich almond milk', price: 40, image: 'https://images.unsplash.com/photo-1579632652768-453cb5f7f6b9?w=400' }
 ];
 
